@@ -1,0 +1,3 @@
+logo-cea-list.png
+  CEA List logo, provided by the authors. Trademark of CEA.
+  Shown to identify the authors' affiliation.

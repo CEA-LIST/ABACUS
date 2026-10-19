@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use ABACUS, please cite it as below."
+title: "ABACUS: A Benchmark for Image Editing Models to Assess Object Category and Counting Under Scene Conservation"
+authors:
+  - family-names: Lassoued
+    given-names: Aymen
+    affiliation: "Université Paris-Saclay, CEA, List"
+  - family-names: Loesch
+    given-names: Angelique
+    affiliation: "Université Paris-Saclay, CEA, List"
+  - family-names: Audigier
+    given-names: Romaric
+    affiliation: "Université Paris-Saclay, CEA, List"
+repository-code: "https://github.com/CEA-LIST/ABACUS"
+url: "https://cea-list.github.io/ABACUS/"
+license: CC-BY-4.0
+keywords:
+  - image editing
+  - benchmark
+  - counting
+  - evaluation
+preferred-citation:
+  type: conference-paper
+  title: "ABACUS: A Benchmark for Image Editing Models to Assess Object Category and Counting Under Scene Conservation"
+  authors:
+    - family-names: Lassoued
+      given-names: Aymen
+    - family-names: Loesch
+      given-names: Angelique
+    - family-names: Audigier
+      given-names: Romaric
+  collection-title: "Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)"
+  year: 2027

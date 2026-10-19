@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="ABACUS logo">
+  <rect x="5" y="7" width="54" height="50" rx="10" fill="none" stroke="#f0efec" stroke-width="4"/>
+  <g stroke="#55544f" stroke-width="2" stroke-linecap="round">
+    <line x1="9" y1="21" x2="55" y2="21"/>
+    <line x1="9" y1="32" x2="55" y2="32"/>
+    <line x1="9" y1="43" x2="55" y2="43"/>
+  </g>
+  <g fill="#3987e5"><circle cx="16" cy="21" r="4.6"/><circle cx="26" cy="21" r="4.6"/><circle cx="36" cy="21" r="4.6"/></g>
+  <g fill="#d95926"><circle cx="16" cy="32" r="4.6"/></g>
+  <g fill="#199e70"><circle cx="16" cy="43" r="4.6"/><circle cx="26" cy="43" r="4.6"/></g>
+  <g fill="#55544f"><circle cx="48" cy="21" r="4.6"/><circle cx="38" cy="32" r="4.6"/><circle cx="48" cy="32" r="4.6"/><circle cx="48" cy="43" r="4.6"/></g>
+</svg>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ABACUS: Numerical Image Editing Benchmark</title>
+  <meta name="description" content="ABACUS is a benchmark, judge-free evaluation protocol and scoring metric for numerical image editing: adding, removing and changing an exact number of objects while preserving the scene. WACV 2027.">
+  <meta name="keywords" content="ABACUS, image editing, benchmark, counting, numerical editing, evaluation, WACV 2027">
+  <meta name="author" content="Aymen Lassoued, Angelique Loesch, Romaric Audigier">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f9f9f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ABACUS: A Benchmark for Numerical Image Editing">
+  <meta property="og:description" content="Can image editors add, remove or change exactly K objects without disturbing the scene? A judge-free benchmark, evaluation protocol and metric. WACV 2027.">
+  <meta property="og:image" content="https://cea-list.github.io/ABACUS/static/images/social-preview.jpg">
+  <meta property="og:url" content="https://cea-list.github.io/ABACUS/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="static/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="static/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="static/css/style.css">
+  <script>
+    (function () {
+      try {
+        var q = new URLSearchParams(location.search).get("theme");
+        var t = q || localStorage.getItem("abacus-theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- ================================================================ NAV -->
+  <header class="nav" id="top">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="ABACUS home">
+        <span class="mark" aria-hidden="true"></span>
+        <span>ABACUS</span>
+      </a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#overview">Overview</a>
+        <a href="#benchmark">Benchmark</a>
+        <a href="#protocol">Protocol</a>
+        <a href="#results">Results</a>
+        <a href="#citation">Citation</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="icon-btn" href="https://github.com/CEA-LIST/ABACUS" aria-label="Code on GitHub" title="Code on GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+        </a>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></g></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============================================================ HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="venue">WACV 2027 <span class="venue-sep"></span> Evaluations and Datasets track</p>
+        <h1 class="title"><span class="title-name">ABACUS</span></h1>
+        <p class="subtitle">A Benchmark for Image Editing Models to Assess Object Category and Counting Under Scene Conservation</p>
+
+        <p class="authors">
+          <span>Aymen Lassoued</span><span class="sep"></span>
+          <span>Angelique Loesch</span><span class="sep"></span>
+          <span>Romaric Audigier</span>
+        </p>
+        <p class="affil">Universit&eacute; Paris-Saclay, CEA, List, F-91120 Palaiseau, France</p>
+        <div class="affil-logos">
+          <img src="static/images/logo-cea-list.png" width="533" height="274" alt="CEA List">
+        </div>
+
+        <div class="links">
+          <span class="btn is-soon" title="Available soon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M6 2.8h8.2L19 7.6V20a1.2 1.2 0 0 1-1.2 1.2H6A1.2 1.2 0 0 1 4.8 20V4A1.2 1.2 0 0 1 6 2.8Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M14 3v4.8h4.8M8.5 12.5h7M8.5 16h7"/></svg>
+            Paper <span class="soon">Soon</span>
+          </span>
+          <a class="btn" href="https://github.com/CEA-LIST/ABACUS">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+            Code
+          </a>
+          <a class="btn" href="https://huggingface.co/datasets/Aymen-Lassoued/ABACUS_Bench">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v6.5c0 1.55 3.36 2.8 7.5 2.8s7.5-1.25 7.5-2.8V5.5M4.5 12v6.5c0 1.55 3.36 2.8 7.5 2.8s7.5-1.25 7.5-2.8V12"/></g></svg>
+            Dataset
+          </a>
+          <a class="btn btn-ghost" href="#citation">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.5 6.5h5v5.2c0 3.3-1.7 5.5-4.6 6.3l-.6-1.5c1.6-.7 2.4-1.9 2.5-3.5H5.5Zm8 0h5v5.2c0 3.3-1.7 5.5-4.6 6.3l-.6-1.5c1.6-.7 2.4-1.9 2.5-3.5h-2.3Z"/></svg>
+            BibTeX
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== TEASER -->
+    <section class="teaser">
+      <div class="wrap">
+        <figure class="figure figure-teaser">
+          <div class="paper"><img src="static/images/teaser.webp" srcset="static/images/teaser-800.webp 800w, static/images/teaser.webp 1314w" sizes="(max-width: 552px) calc(100vw - 32px), 520px" data-full="static/images/teaser.webp" width="1314" height="1146" alt="Two Seedream 4.0 edits. Asked to add 4 persons, the editor repaints existing people and statues; asked to add 3 boats, it removes the original boat and paints four new ones." fetchpriority="high"></div>
+          <figcaption><strong>Numerical editing needs a verifier, not a judge.</strong> Asked to <em>add 4 persons</em> and <em>add 3 boats</em>, a leading editor modifies or removes existing objects of the target category (red boxes) instead of only adding new ones. VLM judges such as VIEScore, I2EBench and RefEdit, and the agentic EdiVal-Agent, still mark these edits as successful. ABACUS correctly identifies both as failures.</figcaption>
+        </figure>
+
+        <dl class="stats">
+          <div><dt>Instructions</dt><dd data-count="10944">10,944</dd></div>
+          <div><dt>COCO images</dt><dd data-count="3845">3,845</dd></div>
+          <div><dt>Categories</dt><dd data-count="80">80</dd></div>
+          <div><dt>Requested count</dt><dd>1 to 15</dd></div>
+          <div><dt>Human agreement</dt><dd>0.82</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ======================================================== ABSTRACT -->
+    <section class="section" id="overview">
+      <div class="wrap narrow">
+        <p class="eyebrow">Abstract</p>
+        <h2 class="h2">Editors can add objects. Can they count them?</h2>
+        <div class="prose">
+          <p>Instruction-based image editing models can now add or remove a specified number of objects, or change their category, while preserving the scene. Yet these models often fail to produce the correct number, and these failures grow sharply as scenes become more complex and the requested count increases. Current benchmarks largely miss this problem: they score edits with holistic similarity metrics or with vision-language model (VLM) judges that are themselves poor at counting, so numerical errors go unnoticed or are graded incorrectly.</p>
+          <p>We address this issue with <strong>ABACUS</strong>, a new benchmark, evaluation protocol and dedicated scoring metric for numerical image editing. Our protocol is <strong>judge-free</strong>: no VLM or MLLM scores an edit or counts objects. Instead, it verifies each edit at the instance level against panoptic ground truth confirmed by detector consensus, checking both that the exact requested count was achieved and that the rest of the scene was preserved, across the add, remove and change operations. Evaluating leading image editors reveals substantial numerical editing failures that worsen with scene complexity and object count, failures that prior benchmarks overlooked or misjudged.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== POSITIONING -->
+    <section class="section alt">
+      <div class="wrap">
+        <div class="split">
+          <div>
+            <p class="eyebrow">Why a new evaluator</p>
+            <h2 class="h2">Verified, not judged</h2>
+            <div class="prose">
+              <p>Similarity metrics such as CLIP, DINO or FID are blind to instance counts. VLM judges are circular: their counting accuracy collapses as the number and variety of objects grows, and they have no notion of <em>instance correspondence</em>. When an editor turns one of two people into a third, or deletes the originals and paints the targets elsewhere, the judge still reports success.</p>
+              <p>ABACUS reconstructs <em>what happened to every object instance</em>. Each object receives a verdict, kept, added, removed or transformed, from segmentation, geometric matching and the independent agreement of two detectors.</p>
+            </div>
+          </div>
+          <figure class="figure quad-figure" aria-labelledby="quad-cap">
+            <svg class="quad" viewBox="0 0 520 420" role="img" aria-labelledby="quad-title quad-desc">
+              <title id="quad-title">Positioning of image editing evaluation methods</title>
+              <desc id="quad-desc">A two by two map. Horizontal axis from judge-based to judge-free, vertical axis from holistic to instance-level. ABACUS is the only method that is both judge-free and instance-level. EdiVal-Agent is instance-level but judge-based. VIEScore, I2EBench and RefEdit are holistic and judge-based. MagicBrush evaluation is judge-free but holistic.</desc>
+              <rect class="q-hi" x="262" y="34" width="226" height="168" rx="12"/>
+              <line class="q-axis" x1="260" y1="30" x2="260" y2="372"/>
+              <line class="q-axis" x1="32" y1="204" x2="488" y2="204"/>
+              <text class="q-lab" x="260" y="20" text-anchor="middle">INSTANCE-LEVEL</text>
+              <text class="q-lab" x="260" y="398" text-anchor="middle">HOLISTIC</text>
+              <text class="q-lab" x="24" y="210" text-anchor="start" transform="rotate(-90 24 204)" dy="0">JUDGE-BASED</text>
+              <text class="q-lab" x="502" y="204" text-anchor="middle" transform="rotate(90 502 204)">JUDGE-FREE</text>
+
+              <circle class="q-dot" cx="146" cy="110" r="6"/>
+              <text class="q-name" x="146" y="92" text-anchor="middle">EdiVal-Agent</text>
+              <text class="q-note" x="146" y="132" text-anchor="middle">VLM still judges</text>
+
+              <circle class="q-dot q-ours" cx="375" cy="110" r="8"/>
+              <text class="q-name q-ours-t" x="375" y="90" text-anchor="middle">ABACUS (ours)</text>
+              <text class="q-note" x="375" y="134" text-anchor="middle">grounded, exact count</text>
+
+              <circle class="q-dot" cx="100" cy="262" r="6"/>
+              <text class="q-name" x="100" y="250" text-anchor="middle">VIEScore</text>
+              <circle class="q-dot" cx="196" cy="262" r="6"/>
+              <text class="q-name" x="196" y="250" text-anchor="middle">I2EBench</text>
+              <circle class="q-dot" cx="148" cy="318" r="6"/>
+              <text class="q-name" x="148" y="306" text-anchor="middle">RefEdit</text>
+              <text class="q-note" x="146" y="350" text-anchor="middle">MLLM rates the edit</text>
+
+              <circle class="q-dot" cx="375" cy="285" r="6"/>
+              <text class="q-name" x="375" y="268" text-anchor="middle">MagicBrush eval</text>
+              <text class="q-note" x="375" y="308" text-anchor="middle">similarity, count-blind</text>
+            </svg>
+            <figcaption id="quad-cap">ABACUS is the only protocol that is both judge-free and grounded at the instance level.</figcaption>
+          </figure>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-head">
+            <h3 class="h3">Positioning against prior benchmarks</h3>
+            <p class="legend-inline"><span class="dot y"></span>Full <span class="dot p"></span>Partial <span class="dot n"></span>Absent</p>
+          </div>
+          <div class="table-scroll">
+            <table class="cmp" id="cmp-table">
+              <thead>
+                <tr><th scope="col">Benchmark</th><th scope="col">Instance GT</th><th scope="col">GT masks</th><th scope="col">Multi-instance</th><th scope="col">Judge-free</th><th scope="col">Mask preservation</th><th scope="col">Count metric</th><th scope="col">Grounded count</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">EditVal</th><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td></tr>
+                <tr><th scope="row">MagicBrush</th><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot p" role="img" aria-label="Partial"></span></td><td><span class="dot p" role="img" aria-label="Partial"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td></tr>
+                <tr><th scope="row">ImgEdit-Bench</th><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot p" role="img" aria-label="Partial"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td></tr>
+                <tr><th scope="row">I2EBench</th><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td></tr>
+                <tr><th scope="row">CompBench</th><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot p" role="img" aria-label="Partial"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td></tr>
+                <tr><th scope="row">KRIS-Bench</th><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td></tr>
+                <tr><th scope="row">RefEdit-Bench</th><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot p" role="img" aria-label="Partial"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td></tr>
+                <tr><th scope="row">ICE-Bench</th><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot p" role="img" aria-label="Partial"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td></tr>
+                <tr><th scope="row">VIBE</th><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td></tr>
+                <tr><th scope="row">GIE-Bench</th><td><span class="dot p" role="img" aria-label="Partial"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td></tr>
+                <tr><th scope="row">EdiVal-Agent</th><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot n" role="img" aria-label="Absent"></span></td></tr>
+                <tr class="ours"><th scope="row">ABACUS (ours)</th><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td><td><span class="dot y" role="img" aria-label="Full"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================= BENCHMARK -->
+    <section class="section" id="benchmark">
+      <div class="wrap">
+        <p class="eyebrow">The benchmark</p>
+        <h2 class="h2">10,944 numerical edits with verified ground truth</h2>
+        <p class="lead">Every instruction is paired with a known target count and a reliable instance-level reference, built from COCO images with COCONut panoptic annotations and confirmed by two independent detectors. Every sample is checked by two annotators.</p>
+
+        <figure class="figure">
+          <div class="paper pad diagram"><img src="static/images/pipeline_benchmark.png" srcset="static/images/pipeline_benchmark-1400.png 1400w, static/images/pipeline_benchmark.png 2400w" sizes="(max-width: 560px) 880px, (max-width: 1120px) calc(100vw - 96px), 1024px" data-full="static/images/pipeline_benchmark.png" width="2400" height="557" alt="Benchmark creation pipeline: detection audit, addition plausibility check, optimal number of addable objects, and human verification." loading="lazy"></div>
+          <figcaption><strong>Creation pipeline.</strong> From COCONut panoptic ground truth to verified instructions in five steps, ending in human verification. <span class="swipe-hint">Swipe to see the whole diagram, or tap to enlarge.</span></figcaption>
+        </figure>
+
+        <ol class="steps">
+          <li><span class="step-n">1</span><h3>Ground-truth counts</h3><p>COCO images with COCONut panoptic masks give the instance count of every image and category pair.</p></li>
+          <li><span class="step-n">2</span><h3>Detector-verified audit</h3><p>RF-DETR and Co-DETR must both confirm the count, and both must see zero instances after a non-generative inpainting removes them.</p></li>
+          <li><span class="step-n">3</span><h3>Plausibility check</h3><p>A VLM checks that the scene can plausibly receive one more instance. It never sets a count or scores an edit.</p></li>
+          <li><span class="step-n">4</span><h3>Addable capacity</h3><p>The scene is decomposed to estimate how many new instances would look natural, bounding the target count.</p></li>
+          <li><span class="step-n">5</span><h3>Instructions and review</h3><p>Simple instructions such as <em>add K boats</em>. Two annotators and a final verifier check feasibility and the difficulty tier.</p></li>
+        </ol>
+
+        <div class="grid-2 align-start">
+          <div class="card">
+            <h3 class="h3">Composition</h3>
+            <div class="table-scroll">
+              <table class="data" id="composition">
+                <thead><tr><th scope="col">Tier</th><th scope="col">Add</th><th scope="col">Remove</th><th scope="col">Change</th><th scope="col">Total</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Easy</th><td>1,159</td><td>1,146</td><td>1,000</td><td>3,305</td></tr>
+                  <tr><th scope="row">Medium</th><td>1,363</td><td>1,340</td><td>1,128</td><td>3,831</td></tr>
+                  <tr><th scope="row">Hard</th><td>1,374</td><td>1,308</td><td>1,126</td><td>3,808</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr><th scope="row">Total</th><td>3,896</td><td>3,794</td><td>3,254</td><td><strong>10,944</strong></td></tr>
+                  <tr class="sub"><th scope="row">Mean K</th><td>3.20</td><td>2.32</td><td>2.30</td><td></td></tr>
+                  <tr class="sub"><th scope="row">Max K</th><td>15</td><td>10</td><td>10</td><td></td></tr>
+                </tfoot>
+              </table>
+            </div>
+            <p class="note">3,845 COCO source images, all 80 categories, 72 change pairs.</p>
+          </div>
+          <div class="card">
+            <h3 class="h3">Difficulty that reflects real scene complexity</h3>
+            <p>Difficulty is a composite of three rank-normalized axes: <strong>foreground coverage</strong>, <strong>target capacity</strong> and <strong>target-object scale</strong>. Their sum is split at its terciles into easy, medium and hard.</p>
+            <p>The split is non-circular. Attributes that never enter the score, such as the number of instances and categories, still separate the tiers, and every editor's score drops from easy to hard.</p>
+          </div>
+        </div>
+
+        <figure class="figure">
+          <div class="paper"><img src="static/images/examples.webp" srcset="static/images/examples-1000.webp 1000w, static/images/examples.webp 1629w" sizes="(max-width: 1120px) calc(100vw - 32px), 1072px" data-full="static/images/examples.webp" width="1629" height="420" alt="Three benchmark samples: change 4 cars to trucks, remove 5 bottles, add 8 persons." loading="lazy"></div>
+          <figcaption><strong>One sample per operation.</strong> Change, remove and add, each with its instruction.</figcaption>
+        </figure>
+        <figure class="figure">
+          <div class="paper"><img src="static/images/difficulty.webp" srcset="static/images/difficulty-1000.webp 1000w, static/images/difficulty.webp 2000w" sizes="(max-width: 1120px) calc(100vw - 32px), 1072px" data-full="static/images/difficulty.webp" width="2000" height="556" alt="Example images for the easy, medium and hard tiers, from sparse scenes with large objects to crowded indoor scenes." loading="lazy"></div>
+          <figcaption><strong>Difficulty tiers.</strong> From uncluttered scenes with large targets to crowded scenes with many small instances.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ======================================================== PROTOCOL -->
+    <section class="section alt" id="protocol">
+      <div class="wrap">
+        <p class="eyebrow">Evaluation protocol</p>
+        <h2 class="h2">What happened to every object?</h2>
+        <p class="lead">Given the source image, the edited image and the instruction, ABACUS assigns each instance a verdict, then checks the exact count and the conservation of the scene. Addition and removal share one pipeline; change couples the two.</p>
+
+        <figure class="figure">
+          <div class="paper pad diagram"><img src="static/images/pipeline_protocol.png" srcset="static/images/pipeline_protocol-1400.png 1400w, static/images/pipeline_protocol.png 2400w" sizes="(max-width: 560px) 880px, (max-width: 1120px) calc(100vw - 96px), 1024px" data-full="static/images/pipeline_protocol.png" width="2400" height="811" alt="The add and remove pipeline with four stages: novelty discovery, clean-image construction, detection block and ambiguity resolution." loading="lazy"></div>
+          <figcaption><strong>The add and remove pipeline.</strong> Four stages map the two images and the panoptic ground truth to the confirmed new instances and the unmatched originals. The two outputs swap roles between addition and removal. <span class="swipe-hint">Swipe to see the whole diagram, or tap to enlarge.</span></figcaption>
+        </figure>
+
+        <div class="stages">
+          <article class="stage"><span class="stage-n s1">1</span><h3>Novelty discovery</h3><p>Presence-gated SAM 3 segments the category in both images. A drift-robust geometric matcher with Hungarian assignment separates preserved objects from genuinely new ones, and repairs missing panoptic labels.</p></article>
+          <article class="stage"><span class="stage-n s2">2</span><h3>Clean-image construction</h3><p>Preserved objects are erased with classical, non-generative inpainting so that only the additions remain, even when they overlap existing objects.</p></article>
+          <article class="stage"><span class="stage-n s3">3</span><h3>Dual-detector confirmation</h3><p>RF-DETR and Co-DETR vote independently on every candidate region. An instance counts only when both agree.</p></article>
+          <article class="stage"><span class="stage-n s4">4</span><h3>Ambiguity resolution</h3><p>The rare unconfirmed crop (6.4% of instances) is super-resolved and checked by a yes or no category question. The VLM never counts and never judges the edit.</p></article>
+        </div>
+
+        <div class="grid-2 align-center change-row">
+          <figure class="figure">
+            <div class="paper pad"><img src="static/images/pipeline_change.png" width="1750" height="804" alt="The change pipeline: the remove branch runs on the source class and the add branch on the target class, and removed and added positions are matched." loading="lazy"></div>
+          </figure>
+          <div>
+            <h3 class="h3">Change means in place</h3>
+            <p>A change from one class to another is credited only where a removed source instance and an added target instance coincide in location. Delete-here, paint-there edits that a naive remove plus add count would accept are rejected.</p>
+          </div>
+        </div>
+
+        <div class="score card">
+          <div class="score-head">
+            <h3 class="h3">One unforgiving score</h3>
+            <div class="formula"><math><mrow><mi>Score</mi><mo>=</mo><mi>CF</mi><mo>&#8901;</mo><mi>SC</mi><mo>&#8901;</mo><mi>OC</mi></mrow></math></div>
+          </div>
+          <div class="score-grid">
+            <div class="factor">
+              <h4>Count fidelity <span>CF</span></h4>
+              <div class="formula small"><math displaystyle="true"><mrow><mi>CF</mi><mo>=</mo><mfrac><mrow><mn>2</mn><mspace width="0.17em"/><mi>min</mi><mo stretchy="false" lspace="0" rspace="0">(</mo><mi>d</mi><mo lspace="0" rspace="0.2em">,</mo><mi>K</mi><mo stretchy="false" lspace="0" rspace="0">)</mo></mrow><mrow><mi>d</mi><mo>+</mo><mi>K</mi></mrow></mfrac></mrow></math></div>
+              <p>Dice on counts between the delivered count <em>d</em> and the requested <em>K</em>. Equal to 1 only when they match; over- and under-shooting are penalized alike.</p>
+            </div>
+            <div class="factor">
+              <h4>Scene consistency <span>SC</span></h4>
+              <div class="formula small"><math displaystyle="true"><mrow><mi>SC</mi><mo>=</mo><mi>HM</mi><mo stretchy="false" lspace="0" rspace="0">(</mo><msub><mi>SC</mi><mi>str</mi></msub><mo lspace="0" rspace="0.2em">,</mo><msub><mi>SC</mi><mi>app</mi></msub><mo stretchy="false" lspace="0" rspace="0">)</mo></mrow></math></div>
+              <p>Harmonic mean of a RAFT optical-flow term for spatial drift and MS-SSIM for appearance, measured on the background only.</p>
+            </div>
+            <div class="factor">
+              <h4>Conservation <span>OC</span></h4>
+              <div class="formula small"><math displaystyle="true"><mrow><mi>OC</mi><mo>=</mo><mn>1</mn><mo>&#8722;</mo><mfrac><msub><mi>N</mi><mi>rem</mi></msub><msub><mi>N</mi><mi>GT</mi></msub></mfrac></mrow></math></div>
+              <p>Original-category conservation penalizes reaching the count by overwriting, relocating or deleting objects that were already there.</p>
+            </div>
+          </div>
+          <p class="note">The product is necessary: under a plain average, an editor that returns the image untouched would score 0.667, above six of the seven real editors. The product gives it 0.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= RESULTS -->
+    <section class="section" id="results">
+      <div class="wrap">
+        <p class="eyebrow">Results</p>
+        <h2 class="h2">Leading editors still cannot count</h2>
+        <p class="lead">Even the strongest editor delivers the exact requested number on fewer than half of the edits, and every editor degrades from easy to hard scenes. Count fidelity is the weakest factor; original-category conservation is close behind.</p>
+
+        <div class="card leaderboard">
+          <div class="lb-top">
+            <div class="tabs" role="tablist" aria-label="Leaderboard view">
+              <button type="button" role="tab" aria-selected="true" data-view="overall">Overall</button>
+              <button type="button" role="tab" aria-selected="false" data-view="add">Add</button>
+              <button type="button" role="tab" aria-selected="false" data-view="remove">Remove</button>
+              <button type="button" role="tab" aria-selected="false" data-view="change">Change</button>
+            </div>
+            <p class="legend-inline"><span class="tag prop">Proprietary</span><span class="tag open">Open</span></p>
+          </div>
+          <div class="table-scroll">
+            <table class="data lb" id="leaderboard" aria-describedby="lb-note">
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="note" id="lb-note">Scores in [0, 1], higher is better. Click a column to sort. E, M, H: easy, medium and hard tiers. Overall factors are averaged over all 10,944 edits and the Score is their product. The three proprietary models are statistically tied: their 95% bootstrap intervals overlap.</p>
+        </div>
+
+        <div class="grid-2 align-start charts">
+          <div class="card chart-card">
+            <div class="chart-head">
+              <h3 class="h3">Agreement with human counts</h3>
+              <p class="chart-sub">Exact-count agreement on 600 human-annotated edits, by difficulty tier. Solo VLM: Qwen3.6-27B in thinking mode. Single detector: Grounding-DINO.</p>
+            </div>
+            <div class="legend" id="legend-tier"></div>
+            <div class="chart" id="chart-tier"></div>
+            <button class="link-btn" type="button" data-table-toggle="tier-table" aria-expanded="false">Show as table</button>
+            <div class="table-scroll" id="tier-table" hidden></div>
+          </div>
+          <div class="card chart-card">
+            <div class="chart-head">
+              <h3 class="h3">Stable across editors</h3>
+              <p class="chart-sub">Exact-count agreement on 200 edits per editor, ordered from the strongest editor to the weakest. ABACUS barely moves while single-tool counters collapse.</p>
+            </div>
+            <div class="legend" id="legend-editor"></div>
+            <div class="chart" id="chart-editor"></div>
+            <button class="link-btn" type="button" data-table-toggle="editor-table" aria-expanded="false">Show as table</button>
+            <div class="table-scroll" id="editor-table" hidden></div>
+          </div>
+        </div>
+
+        <div class="grid-3 facts">
+          <div class="fact"><p class="fact-n">0.82</p><p>exact-count agreement with humans, against 0.55 for a top VLM counter and 0.28 for a single open-vocabulary detector.</p></div>
+          <div class="fact"><p class="fact-n">0.09</p><p>gap to the two-annotator human ceiling on hard scenes, and the gap does not widen with difficulty.</p></div>
+          <div class="fact"><p class="fact-n">0.88</p><p>rank correlation between the full ABACUS Score and human overall ratings.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== WALKTHROUGH -->
+    <section class="section alt" id="walkthroughs">
+      <div class="wrap">
+        <p class="eyebrow">Walkthroughs</p>
+        <h2 class="h2">The protocol on real edits</h2>
+        <p class="lead">Each panel traces the pipeline stage by stage on a real edit. Select an example, then click the image to enlarge it.</p>
+
+        <div class="gallery">
+          <div class="chips" role="tablist" aria-label="Walkthrough examples" id="gallery-chips"></div>
+          <figure class="figure gallery-figure">
+            <button class="paper zoomable zoom" type="button" id="gallery-open" aria-label="Enlarge image">
+              <img id="gallery-img" src="static/images/walk_add_backpacks.webp" srcset="static/images/walk_add_backpacks-1000.webp 1000w, static/images/walk_add_backpacks.webp 1800w" sizes="(max-width: 1120px) calc(100vw - 32px), 1072px" width="1800" height="1374" alt="" loading="lazy">
+              <span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8M10.5 7.5v6M7.5 10.5h6"/></g></svg></span>
+            </button>
+            <figcaption id="gallery-cap"></figcaption>
+          </figure>
+        </div>
+
+        <div class="match card">
+          <div class="match-text">
+            <h3 class="h3">Matching catches what a judge cannot see</h3>
+            <p>Asked to <em>add 2 cars</em>, the editor blends the new cars in so naturally that the before and after look like the same street. The geometric matcher marks the pre-existing car as matched (e1) and the two inserted cars as new (e0, e2): a precise, grounded count for a near-imperceptible edit.</p>
+          </div>
+          <div class="match-imgs">
+            <figure><div class="paper"><img src="static/images/match_before.webp" srcset="static/images/match_before-400.webp 400w, static/images/match_before.webp 640w" sizes="(max-width: 560px) 45vw, 200px" data-full="static/images/match_before.webp" width="640" height="480" alt="Source street scene with one car." loading="lazy"></div><figcaption>Source</figcaption></figure>
+            <figure><div class="paper"><img src="static/images/match_after.webp" srcset="static/images/match_after-400.webp 400w, static/images/match_after.webp 640w" sizes="(max-width: 560px) 45vw, 200px" data-full="static/images/match_after.webp" width="640" height="480" alt="Edited street scene with two added cars." loading="lazy"></div><figcaption>Edited</figcaption></figure>
+            <figure><div class="paper"><img src="static/images/match_result.webp" srcset="static/images/match_result-400.webp 400w, static/images/match_result.webp 753w" sizes="(max-width: 560px) 90vw, 240px" data-full="static/images/match_result.webp" width="753" height="474" alt="Matching result: one matched car and two new cars." loading="lazy"></div><figcaption>Matching</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== CITATION -->
+    <section class="section" id="citation">
+      <div class="wrap narrow">
+        <p class="eyebrow">Citation</p>
+        <h2 class="h2">BibTeX</h2>
+        <p>If you find ABACUS useful in your research, please consider citing:</p>
+        <div class="bibtex">
+          <button class="copy" type="button" id="copy-bib">Copy</button>
+<pre><code id="bib">@inproceedings{lassoued2027abacus,
+  title     = {{ABACUS}: A Benchmark for Image Editing Models to Assess
+               Object Category and Counting Under Scene Conservation},
+  author    = {Lassoued, Aymen and Loesch, Angelique and Audigier, Romaric},
+  booktitle = {Proceedings of the IEEE/CVF Winter Conference on
+               Applications of Computer Vision (WACV)},
+  year      = {2027}
+}</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <p><span class="mark sm" aria-hidden="true"></span> ABACUS, WACV 2027</p>
+      <p>Source images from <a href="https://cocodataset.org">COCO</a>, panoptic labels from <a href="https://xdeng7.github.io/coconut.github.io/">COCONut</a>.</p>
+      <p class="funding">Funded by the European Union under the Horizon Europe project CustomAI (grant 101226029). Views and opinions expressed are those of the authors only and do not necessarily reflect those of the European Union or the European Commission, which cannot be held responsible for them.</p>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" id="lightbox">
+    <button class="lb-close" type="button" aria-label="Close">&times;</button>
+  </dialog>
+
+  <script defer src="static/js/main.js"></script>
+</body>
+</html>
