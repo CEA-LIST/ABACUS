@@ -18,10 +18,7 @@
   <br>
   Université Paris-Saclay, CEA, List, F-91120 Palaiseau, France
   <br>
-  <br>
-  Official repository of ABACUS (published at IEEE/CVF WACV 2027)
-  <br>
-  <a href="https://cea-list.github.io/ABACUS/"><b>Project page</b></a>
+  <b>WACV 2027</b>, Evaluations and Datasets track
 </p>
 
 <p align="center">
