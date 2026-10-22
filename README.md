@@ -27,7 +27,7 @@
 
 <p align="center">
   <a href="https://cea-list.github.io/ABACUS/"><img src="https://img.shields.io/badge/Project-Page-2a78d6?style=flat-square" alt="Project page"></a>
-  <img src="https://img.shields.io/badge/Paper-coming%20soon-b31b1b?style=flat-square" alt="Paper: coming soon">
+  <a href="https://arxiv.org/abs/2610.28316"><img src="https://img.shields.io/badge/arXiv-2610.28316-b31b1b?style=flat-square" alt="arXiv 2610.28316"></a>
   <a href="https://huggingface.co/datasets/Aymen-Lassoued/ABACUS_Bench"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-Hugging%20Face-ffbd45?style=flat-square" alt="Dataset on Hugging Face"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey?style=flat-square" alt="License: CC BY 4.0"></a>
 </p>
@@ -152,7 +152,7 @@ The three proprietary models are statistically tied (overlapping 95% bootstrap i
 - [x] Project page
 - [ ] Evaluation code
 - [x] [Benchmark dataset](https://huggingface.co/datasets/Aymen-Lassoued/ABACUS_Bench) on the Hugging Face Hub
-- [ ] Paper
+- [x] [Paper](https://arxiv.org/abs/2610.28316) on arXiv
 
 Watch or star this repository to be notified when the code is released.
 

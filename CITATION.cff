@@ -13,6 +13,10 @@ authors:
     affiliation: "Université Paris-Saclay, CEA, List"
 repository-code: "https://github.com/CEA-LIST/ABACUS"
 url: "https://cea-list.github.io/ABACUS/"
+identifiers:
+  - type: url
+    value: "https://arxiv.org/abs/2610.28316"
+    description: "arXiv preprint"
 license: CC-BY-4.0
 keywords:
   - image editing
