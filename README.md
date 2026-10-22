@@ -199,12 +199,14 @@ If you find ABACUS useful in your research, please cite:
 
 ```bibtex
 @inproceedings{lassoued2027abacus,
-  title     = {{ABACUS}: A Benchmark for Image Editing Models to Assess
-               Object Category and Counting Under Scene Conservation},
-  author    = {Lassoued, Aymen and Loesch, Angelique and Audigier, Romaric},
-  booktitle = {Proceedings of the IEEE/CVF Winter Conference on
-               Applications of Computer Vision (WACV)},
-  year      = {2027}
+  title         = {{ABACUS}: A Benchmark for Image Editing Models to Assess
+                   Object Category and Counting Under Scene Conservation},
+  author        = {Lassoued, Aymen and Loesch, Angelique and Audigier, Romaric},
+  booktitle     = {Proceedings of the IEEE/CVF Winter Conference on
+                   Applications of Computer Vision (WACV)},
+  year          = {2027},
+  eprint        = {2610.28316},
+  archivePrefix = {arXiv}
 }
 ```
 
